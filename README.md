@@ -1,2 +1,5 @@
 # ASL_alphabet_classifier
-Final project of MAIS 202 bootcamp // classifier for ASL alphabet photos
+Final
+
+
+Training data retrieved from [Kaggle](https://www.kaggle.com/grassknoted/asl-alphabet).
