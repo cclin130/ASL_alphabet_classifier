@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
 #Cheng Lin
 #MAIS 202 Bootcamp, deliverable 2
 #ASL classifier training code
@@ -9,11 +16,13 @@ import numpy as np
 from skimage.feature import hog
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
+from sklearn.multiclass import OneVsRestClassifier
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 from matplotlib import pyplot as plt
 import seaborn as sns
+import pickle
 
 #define function to read in image and vectorize using HOG
 def img_to_HOG(file_name):
@@ -42,7 +51,7 @@ if __name__ == '__main__':
             data.append(temp)
             label.append(folder)
 
-            if count>=300: break
+            if count>=100: break
 
     #convert data to np array
     X = np.array(data)
@@ -60,7 +69,7 @@ if __name__ == '__main__':
     X_train, X_test, y_train, y_test = train_test_split(X, y,shuffle=True, random_state=42)
 
     #train model on data
-    model = svm.SVC(gamma='scale', decision_function_shape='ovo', random_state=42)
+    model = OneVsRestClassifier(svm.SVC(kernel='linear', verbose=True))
     model.fit(X_train, y_train)
 
     #calculate accuracy
@@ -77,3 +86,11 @@ if __name__ == '__main__':
     plt.ylabel('true value')
 
     plt.show()
+    
+    #save model
+    with open('obj/ASL_class_model.pkl', 'wb') as output:
+        pickle.dump(model, output, pickle.HIGHEST_PROTOCOL)
+        
+    #load model:
+    with open('obj/ASL_class_model.pkl','rb') as input:
+        model = pickle.load(input)
