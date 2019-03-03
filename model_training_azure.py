@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-This is a temporary script file.
-"""
-
 #Cheng Lin
 #MAIS 202 Bootcamp, deliverable 2
 #ASL classifier training code
@@ -45,14 +38,15 @@ if __name__ == '__main__':
 
     #loop through all folders
     #corpus_path = data_dir
+    print('----------retrieving data from ' + corpus_path + ' ---------------')
     for folder in os.listdir(corpus_path):
         full_path = os.path.join(corpus_path, folder)
         count=0
         for image in os.listdir(full_path):
             count+=1;
+            print(image)
             
             if count >= idx_start and count < idx_stop:
-                print(image)
                 image_path = os.path.join(full_path, image)
             
                 temp = img_to_HOG(image_path)
