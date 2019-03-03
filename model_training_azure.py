@@ -91,7 +91,7 @@ if __name__ == '__main__':
     y_pred = model.predict(X_test)
 
     accuracy = accuracy_score(y_test, y_pred)
-    print('accuracy for model :")
+    print('accuracy for model :')
     print(accuracy)
 
     #confusion matrix
