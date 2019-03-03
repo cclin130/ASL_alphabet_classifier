@@ -35,33 +35,40 @@ def img_to_HOG(file_name):
 
 #read in all data, create a dataframe of data
 if __name__ == '__main__':
-    root = sys.arg[1]
+    corpus_path = sys.argv[1]
+    model_path = sys.argv[2]
+    idx_start = int(sys.argv[3])
+    idx_stop = int(sys.argv[4])
     
     data = []
     label = []
 
     #loop through all folders
-    corpus_path = root+'/data/asl_alphabet_train'
+    #corpus_path = data_dir
     for folder in os.listdir(corpus_path):
         full_path = os.path.join(corpus_path, folder)
         count=0
         for image in os.listdir(full_path):
             count+=1;
-            print(image)
-            image_path = os.path.join(full_path, image)
-            temp = img_to_HOG(image_path)
+            
+            if count >= idx_start and count < idx_stop:
+                print(image)
+                image_path = os.path.join(full_path, image)
+            
+                temp = img_to_HOG(image_path)
+    
+                data.append(temp)
+                label.append(folder)
 
-            data.append(temp)
-            label.append(folder)
-
-            if count>=100: break
+            if count>= idx_stop: break
 
     #convert data to np array
     X = np.array(data)
 
     #convert labels to array and one-hot encode
     y_labels = np.array(label)
-
+    
+    print('--------------encoding labels----------------')
     le = LabelEncoder()
     le.fit(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
          'X', 'Y'])
@@ -69,16 +76,22 @@ if __name__ == '__main__':
     y = le.fit_transform(y_labels)
 
     #get train-test split
+    print('----------------splitting data-----------------')
     X_train, X_test, y_train, y_test = train_test_split(X, y,shuffle=True, random_state=42)
 
     #train model on data
+    
+    
+    print('----------------training model-----------------')
     model = OneVsRestClassifier(svm.SVC(kernel='linear', verbose=True))
     model.fit(X_train, y_train)
 
     #calculate accuracy
+    print('------------------testing on validation set-------------')
     y_pred = model.predict(X_test)
 
     accuracy = accuracy_score(y_test, y_pred)
+    print('accuracy for model :")
     print(accuracy)
 
     #confusion matrix
@@ -91,9 +104,9 @@ if __name__ == '__main__':
     plt.show()
     
     #save model
-    with open(root+'/obj/ASL_class_model.pkl', 'wb') as output:
+    with open(model_path, 'wb') as output:
         pickle.dump(model, output, pickle.HIGHEST_PROTOCOL)
         
     #load model:
-    with open(root+'/obj/ASL_class_model.pkl','rb') as input:
-        model = pickle.load(input)
+    #with open(model_path,'rb') as input:
+        #model = pickle.load(input)
