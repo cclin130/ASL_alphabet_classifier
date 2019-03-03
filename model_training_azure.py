@@ -46,7 +46,7 @@ if __name__ == '__main__':
         count=0
         for image in os.listdir(full_path):
             count+=1;
-            print(image)
+            #print(image)
             
             if count >= idx_start and count < idx_stop:
                 image_path = os.path.join(full_path, image)
