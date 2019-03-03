@@ -40,6 +40,8 @@ if __name__ == '__main__':
     #corpus_path = data_dir
     print('----------retrieving data from ' + corpus_path + ' ---------------')
     for folder in os.listdir(corpus_path):
+        print(folder)
+        
         full_path = os.path.join(corpus_path, folder)
         count=0
         for image in os.listdir(full_path):
@@ -89,13 +91,13 @@ if __name__ == '__main__':
     print(accuracy)
 
     #confusion matrix
-    mat = confusion_matrix(y_test, y_pred)
-
-    sns.heatmap(mat, square=True, annot=True, cbar=False)
-    plt.xlabel('predicted value')
-    plt.ylabel('true value')
-
-    plt.show()
+#    mat = confusion_matrix(y_test, y_pred)
+#
+#    sns.heatmap(mat, square=True, annot=True, cbar=False)
+#    plt.xlabel('predicted value')
+#    plt.ylabel('true value')
+#
+#    plt.show()
     
     #save model
     with open(model_path, 'wb') as output:
