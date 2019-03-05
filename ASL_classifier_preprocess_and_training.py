@@ -40,7 +40,7 @@ if __name__ == '__main__':
     label = []
 
     #loop through all folders
-    corpus_path = '/data/asl_alphabet_train'
+    corpus_path = 'data/asl_alphabet_train'
     for folder in os.listdir(corpus_path):
         full_path = os.path.join(corpus_path, folder)
         count=0
@@ -90,9 +90,9 @@ if __name__ == '__main__':
     plt.show()
     
     #save model
-    with open('/obj/ASL_class_model.pkl', 'wb') as output:
+    with open('obj/ASL_class_model.pkl', 'wb') as output:
         pickle.dump(model, output, pickle.HIGHEST_PROTOCOL)
         
     #load model:
-    with open('/obj/ASL_class_model.pkl','rb') as input:
+    with open('obj/ASL_class_model.pkl','rb') as input:
         model = pickle.load(input)
