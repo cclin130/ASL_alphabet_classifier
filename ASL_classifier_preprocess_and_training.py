@@ -62,8 +62,8 @@ if __name__ == '__main__':
     y_labels = np.array(label)
 
     le = LabelEncoder()
-    le.fit(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
-         'X', 'Y'])
+    le.fit(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',\
+         'X', 'Y', 'Z'])
 
     y = le.fit_transform(y_labels)
 
@@ -76,7 +76,6 @@ if __name__ == '__main__':
 
     #calculate accuracy
     y_pred = model.predict(X_test)
-
     accuracy = accuracy_score(y_test, y_pred)
     print(accuracy)
 
