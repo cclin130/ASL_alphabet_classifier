@@ -62,10 +62,10 @@ if __name__ == '__main__':
     y_labels = np.array(label)
 
     le = LabelEncoder()
-    le.fit(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',\
+    le.fit(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',\
          'X', 'Y', 'Z'])
 
-    y = le.fit_transform(y_labels)
+    y = le.transform(y_labels)
 
     #get train-test split
     X_train, X_test, y_train, y_test = train_test_split(X, y,shuffle=True, random_state=42)
@@ -89,9 +89,9 @@ if __name__ == '__main__':
     plt.show()
     
     #save model
-    with open('obj/ASL_class_model.pkl', 'wb') as output:
+    with open('obj/model_test.pkl', 'wb') as output:
         pickle.dump(model, output, pickle.HIGHEST_PROTOCOL)
         
     #load model:
-    with open('obj/ASL_class_model.pkl','rb') as input:
+    with open('obj/model1000.pkl','rb') as input:
         model = pickle.load(input)
