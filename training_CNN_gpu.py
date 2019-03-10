@@ -101,6 +101,7 @@ if __name__ == '__main__':
 
     #instantiate CNN
     net = CNN(output_size)
+    net.cuda()
     optimizer = torch.optim.Adam(net.parameters(), lr=learning_rate)
     loss_fn = nn.CrossEntropyLoss()
     
