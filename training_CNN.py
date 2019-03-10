@@ -34,7 +34,7 @@ if __name__ == '__main__':
     corpus_path = sys.argv[1]
     max_data_points = int(sys.argv[2])
     max_epochs = int(sys.argv[3])
-    learning_rate = int(sys.argv[4])
+    learning_rate = float(sys.argv[4])
     model_name = sys.argv[5]
     
     img_paths = []
