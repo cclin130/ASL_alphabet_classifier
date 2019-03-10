@@ -100,7 +100,7 @@ if __name__ == '__main__':
     val_loader = DataLoader(val_set, **params)
 
     #instantiate CNN
-    net = CNN(output_size).to
+    net = CNN(output_size)
     optimizer = torch.optim.Adam(net.parameters(), lr=learning_rate)
     loss_fn = nn.CrossEntropyLoss()
     
