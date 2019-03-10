@@ -48,6 +48,7 @@ class CNN(nn.Module):
         
         self.conv1 = nn.Conv2d(200, 16, kernel_size=3, stride=1, padding=1)
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
+        #self.conv2 = nn.Conv2d(16, 8, kernel_size=2, stride=1, padding=0)
         
         self.fc1 = nn.Linear(1600, 64)
         self.fc2 = nn.Linear(64, output_dim)
@@ -57,11 +58,18 @@ class CNN(nn.Module):
         x = x.float()
         
         #convolutional layer + pooling
-        #print('conv')
+        #print('conv 1')
         x = F.relu(self.conv1(x))
         #print(x.shape)
         #print('pool')
         x = self.pool(x)
+        #print(x.shape)
+        
+        #print('conv 2')
+        #x=F.relu(self.conv2(x))
+        #print(x.shape)
+        #x = self.pool(x)
+        #print('pool')
         #print(x.shape)
         
         #reshape data for fully connected layer
