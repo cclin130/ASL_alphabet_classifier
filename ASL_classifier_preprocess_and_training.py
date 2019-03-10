@@ -13,6 +13,7 @@ This is a temporary script file.
 from PIL import Image
 import os
 import sys
+import cv2 as cv
 import numpy as np
 from skimage.feature import hog
 from sklearn.preprocessing import LabelEncoder
@@ -32,6 +33,21 @@ def img_to_HOG(file_name):
     #feature, visual = hog(img, visualize=True)
     img_hog = hog(img)
     return img_hog
+
+def img_to_HOG_contrast(file_name):
+    img = cv.imread(file_name)
+    resized_image = cv.resize(img, (200,200))
+    
+    new_image = np.zeros(resized_image.shape, resized_image.dtype)
+    
+    alpha = 3.0 #contrast control
+    beta = -175 #brightness control
+    
+    #we transform the image to obtain:
+    # new_image(i,j) = alpha*image(i,j) + beta
+    
+    new_image = cv.convertScaleAbs(resized_image,alpha=alpha, beta=beta)
+    return hog(new_image)
 
 #read in all data, create a dataframe of data
 if __name__ == '__main__':
