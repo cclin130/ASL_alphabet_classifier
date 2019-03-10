@@ -155,6 +155,8 @@ if __name__ == '__main__':
         test_acc = 0
             
         for local_batch, local_labels in val_loader:
+            local_batch, local_labels = local_batch.to(device), local_labels.to(device)
+            
             test_pred = net(local_batch)
             test_argmax = torch.argmax(test_pred, dim=1)
             test_acc += torch.sum(test_argmax == local_labels).item()
