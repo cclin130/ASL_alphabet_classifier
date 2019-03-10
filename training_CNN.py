@@ -31,11 +31,11 @@ torch.manual_seed(seed)
       
 if __name__ == '__main__':
     
-    corpus_path = sys.arv[1]
-    max_data_points = sys.arv[2]
-    max_epochs = sys.arv[3]
-    learning_rate = sys.arv[4]
-    model_name = sys.arv[5]
+    corpus_path = sys.argv[1]
+    max_data_points = sys.argv[2]
+    max_epochs = sys.argv[3]
+    learning_rate = sys.argv[4]
+    model_name = sys.argv[5]
     
     img_paths = []
     label = []
