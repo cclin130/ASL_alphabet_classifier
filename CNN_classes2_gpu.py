@@ -47,12 +47,12 @@ class CNN(nn.Module):
     def __init__(self, output_dim):
         super().__init__()
         
-        self.conv1 = nn.Conv2d(3, 16, kernel_size=3, stride=1, padding=1)
+        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, stride=1, padding=1)
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
-        self.conv2 = nn.Conv2d(16, 8, kernel_size=2, stride=1, padding=0)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=5, stride=1, padding=0)
         
-        self.fc1 = nn.Linear(19208, 64)
-        self.fc2 = nn.Linear(64, output_dim)
+        self.fc1 = nn.Linear(147456, 900)
+        self.fc2 = nn.Linear(900, output_dim)
         
     def forward(self, x):
         #cast to float
@@ -75,7 +75,7 @@ class CNN(nn.Module):
         
         #reshape data for fully connected layer
         #print('view')
-        x = x.view(-1, 19208)
+        x = x.view(-1, 147456)
         #print(x.shape)
         
         #fully connected layers
