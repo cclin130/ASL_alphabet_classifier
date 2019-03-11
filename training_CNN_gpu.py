@@ -23,7 +23,7 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 import pickle
 
-from CNN_classes_gpu import ASLLettersDataset, CNN
+from CNN_classes2_gpu import ASLLettersDataset, CNN
 
 seed=42
 np.random.seed(seed)
