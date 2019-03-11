@@ -38,7 +38,6 @@ if __name__ == '__main__':
     for folder in os.listdir(sys.argv[2]):
         full_path = os.path.join(sys.argv[2], folder)
         for image in os.listdir(full_path):
-            count+=1;
             print(image)
             temp = os.path.join(full_path, image)
 
