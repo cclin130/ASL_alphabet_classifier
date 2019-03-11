@@ -35,8 +35,8 @@ if __name__ == '__main__':
     #loop through all folders
     #corpus_path = 'data/asl_alphabet_train'
     print('-------------creating dictionaries for data loaders---------')
-    for folder in os.listdir('data/asl_alphabet_train'):
-        full_path = os.path.join('data/asl_alphabet_train', folder)
+    for folder in os.listdir(sys.argv[2]):
+        full_path = os.path.join(sys.argv[2], folder)
         for image in os.listdir(full_path):
             count+=1;
             print(image)
@@ -98,5 +98,6 @@ if __name__ == '__main__':
     
     #save matrix
     print('-----------------saving matrix-------------------')
-    with open(sys.argv[2], 'wb') as output:
+    print(mat)
+    with open(sys.argv[3], 'wb') as output:
         pickle.dump(mat, output, pickle.HIGHEST_PROTOCOL)
