@@ -61,38 +61,38 @@ class CNN(nn.Module):
         x = x.float()
         
         #convolutional layer + pooling
-        print('conv 1')
+        #print('conv 1')
         x = F.relu(self.conv1(x))
-        print(x.shape)
-        print('pool')
+        #print(x.shape)
+        #print('pool')
         x = self.pool(x)
-        print(x.shape)
+        #print(x.shape)
         
-        print('conv 2')
+        #print('conv 2')
         x=F.relu(self.conv2(x))
-        print(x.shape)
+        #print(x.shape)
         x = self.pool(x)
-        print('pool')
-        print(x.shape)
+        #print('pool')
+        #print(x.shape)
         
-        print('conv 3')
+        #print('conv 3')
         x=F.relu(self.conv3(x))
-        print(x.shape)
+        #print(x.shape)
         x = self.pool(x)
-        print('pool')
-        print(x.shape)
+        #print('pool')
+        #print(x.shape)
         
         #reshape data for fully connected layer
-        print('view')
+        #print('view')
         x = x.view(-1, 16928)
-        print(x.shape)
+        #print(x.shape)
         
         #fully connected layers
-        print('linear')
+        #print('linear')
         x = F.relu(self.fc1(x))
-        print(x.shape)
+        #print(x.shape)
         x = F.relu(self.fc2(x))
-        print(x.shape)
+        #print(x.shape)
         
         return x.squeeze()
         
