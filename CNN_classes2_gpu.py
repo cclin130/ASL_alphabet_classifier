@@ -14,7 +14,7 @@ from torch.utils.data import Dataset
 import torch.nn as nn
 import torch.nn.functional as F
 
-device = torch.device("cuda")
+device = torch.device('cuda')
 
 #function to read in image and normalize it
 def get_normalized_image(image_path):
@@ -48,10 +48,12 @@ class CNN(nn.Module):
         super().__init__()
         
         self.conv1 = nn.Conv2d(3, 32, kernel_size=3, stride=1, padding=1)
-        self.pool = nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
         self.conv2 = nn.Conv2d(32, 64, kernel_size=5, stride=1, padding=0)
+        self.conv3 = nn.Conv2d(64, 32, kernel_size=3, stride=1, padding=0)
         
-        self.fc1 = nn.Linear(147456, 900)
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
+        
+        self.fc1 = nn.Linear(16928, 900)
         self.fc2 = nn.Linear(900, output_dim)
         
     def forward(self, x):
@@ -59,31 +61,38 @@ class CNN(nn.Module):
         x = x.float()
         
         #convolutional layer + pooling
-        #print('conv 1')
+        print('conv 1')
         x = F.relu(self.conv1(x))
-        #print(x.shape)
-        #print('pool')
+        print(x.shape)
+        print('pool')
         x = self.pool(x)
-        #print(x.shape)
+        print(x.shape)
         
-        #print('conv 2')
+        print('conv 2')
         x=F.relu(self.conv2(x))
-        #print(x.shape)
+        print(x.shape)
         x = self.pool(x)
-        #print('pool')
-        #print(x.shape)
+        print('pool')
+        print(x.shape)
+        
+        print('conv 3')
+        x=F.relu(self.conv3(x))
+        print(x.shape)
+        x = self.pool(x)
+        print('pool')
+        print(x.shape)
         
         #reshape data for fully connected layer
-        #print('view')
-        x = x.view(-1, 147456)
-        #print(x.shape)
+        print('view')
+        x = x.view(-1, 16928)
+        print(x.shape)
         
         #fully connected layers
-        #print('linear')
+        print('linear')
         x = F.relu(self.fc1(x))
-        #print(x.shape)
+        print(x.shape)
         x = F.relu(self.fc2(x))
-        #print(x.shape)
+        print(x.shape)
         
         return x.squeeze()
         

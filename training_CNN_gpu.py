@@ -174,9 +174,14 @@ if __name__ == '__main__':
     
     #save model
     print('-----------------saving model-------------------')
-    with open(model_name, 'wb') as output:
+    
+    with open('no_torch_'+model_name, 'wb') as output:
         pickle.dump(net, output, pickle.HIGHEST_PROTOCOL)
+    
+    print('-------------save model using torch-------------')
+    torch.save(net.state_dict(), model_name)
         
     #load model:
-    #with open('obj/model_cnn_1000.pkl','rb') as input:
-    #    net = pickle.load(input)
+    #device = torch.device('cpu')
+    #net = CNN(26)
+    #net.load_state_dict(torch.load('model_cnn_3000_2_cpu.pkl', map_location=device))
