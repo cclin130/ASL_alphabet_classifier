@@ -175,7 +175,7 @@ if __name__ == '__main__':
     
     #confusion matrix
     print('----------------save confusion matrix-----------')
-    mat = confusion_matrix(local_labels,test_argmax)
+    mat = confusion_matrix(local_labels.cpu().detatch().numpy(),test_argmax.cpu().detatch().numpy())
     with open(mat_name, 'wb') as output:
         pickle.dump(mat, output, pickle.HIGHEST_PROTOCOL)
 #
