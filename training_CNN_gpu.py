@@ -36,6 +36,7 @@ if __name__ == '__main__':
     max_epochs = int(sys.argv[3])
     learning_rate = float(sys.argv[4])
     model_name = sys.argv[5]
+    mat_name = sys.argv[6]
     
     img_paths = []
     label = []
@@ -163,15 +164,6 @@ if __name__ == '__main__':
             
         print("Test accuracy:", (test_acc/float(len(val_loader.dataset))))
     
-    #confusion matrix
-#    mat = confusion_matrix(y_val, y_pred)
-#
-#    sns.heatmap(mat, square=True, annot=True, cbar=False)
-#    plt.xlabel('predicted value')
-#    plt.ylabel('true value')
-#
-#    plt.show()
-    
     #save model
     print('-----------------saving model-------------------')
     
@@ -180,7 +172,19 @@ if __name__ == '__main__':
     
     print('-------------save model using torch-------------')
     torch.save(net.state_dict(), model_name)
-        
+    
+    #confusion matrix
+    print('----------------save confusion matrix-----------')
+    mat = confusion_matrix(local_labels,test_argmax)
+    with open(mat_name, 'wb') as output:
+        pickle.dump(mat, output, pickle.HIGHEST_PROTOCOL)
+#
+#    sns.heatmap(mat, square=True, annot=True, cbar=False)
+#    plt.xlabel('predicted value')
+#    plt.ylabel('true value')
+#
+#    plt.show()
+
     #load model:
     #device = torch.device('cpu')
     #net = CNN(26)
