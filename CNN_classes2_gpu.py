@@ -92,7 +92,7 @@ class CNN(nn.Module):
         #print('linear')
         x = F.relu(self.fc6(x))
         #print(x.shape)
-        x = F.relu(self.fc7(x))
+        x = F.softmax(self.fc7(x), dim=1)
         #print(x.shape)
         
         return x.squeeze()
