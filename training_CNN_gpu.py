@@ -163,6 +163,11 @@ if __name__ == '__main__':
             test_acc += torch.sum(test_argmax == local_labels).item()
             
         print("Test accuracy:", (test_acc/float(len(val_loader.dataset))))
+        
+        print('----------------save confusion matrix-----------')
+        mat = confusion_matrix(local_labels.cpu().numpy(),test_argmax.cpu().numpy())
+        with open(mat_name, 'wb') as output:
+            pickle.dump(mat, output, pickle.HIGHEST_PROTOCOL)
     
     #save model
     print('-----------------saving model-------------------')
@@ -174,10 +179,6 @@ if __name__ == '__main__':
     torch.save(net.state_dict(), model_name)
     
     #confusion matrix
-    print('----------------save confusion matrix-----------')
-    mat = confusion_matrix(local_labels.cpu().numpy(),test_argmax.cpu().numpy())
-    with open(mat_name, 'wb') as output:
-        pickle.dump(mat, output, pickle.HIGHEST_PROTOCOL)
 #
 #    sns.heatmap(mat, square=True, annot=True, cbar=False)
 #    plt.xlabel('predicted value')

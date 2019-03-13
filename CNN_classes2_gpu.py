@@ -20,10 +20,13 @@ device = torch.device('cuda')
 def get_normalized_image(image_path):
     img = cv.imread(image_path, 0)
     #img = np.swapaxes(img, 0,2)
-    img_norm = (img-np.mean(img))/np.std(img)
-    tensor_img_norm = torch.from_numpy(img_norm).unsqueeze(0)
+    #img_norm = (img-np.mean(img))/np.std(img)
     
-    return tensor_img_norm
+    img_thresh = cv.adaptiveThreshold(img,255,cv.ADAPTIVE_THRESH_MEAN_C,\
+        cv.THRESH_BINARY,11,2) 
+    tensor_img = torch.from_numpy(img_thresh).unsqueeze(0)
+    
+    return tensor_img
 
 class ASLLettersDataset(Dataset):
     def __init__(self, img_paths, labels):
