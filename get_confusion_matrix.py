@@ -26,8 +26,18 @@ torch.manual_seed(seed)
 if __name__ == '__main__':
     
     #load model:
-    with open(sys.argv[1],'rb') as input:
-        net = pickle.load(input)
+    device = torch.device('cpu')
+    net = CNN(26)
+    net.load_state_dict(torch.load('model_cnn_3000_6.pkl', map_location=device))
+    
+    with open('mat_3000_6.pkl', 'rb') as input:
+        mat = pickle.load(input)
+    
+    sns.heatmap(mat, square=True, annot=True, cbar=False)
+    plt.xlabel('predicted value')
+    plt.ylabel('true value')
+
+    plt.show()
     
     img_paths = []
     label = []
