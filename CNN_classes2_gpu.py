@@ -22,8 +22,9 @@ def get_normalized_image(image_path):
     #img = np.swapaxes(img, 0,2)
     #img_norm = (img-np.mean(img))/np.std(img)
     
-    img_thresh = cv.adaptiveThreshold(img,255,cv.ADAPTIVE_THRESH_MEAN_C,\
+    img_thresh = cv.adaptiveThreshold(img,100,cv.ADAPTIVE_THRESH_GAUSSIAN_C,\
         cv.THRESH_BINARY,11,2) 
+    img_thresh[img_thresh == 0] = 20
     tensor_img = torch.from_numpy(img_thresh).unsqueeze(0)
     
     return tensor_img
