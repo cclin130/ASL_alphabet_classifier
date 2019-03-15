@@ -13,28 +13,35 @@ import torch
 from torch.utils.data import Dataset
 import torch.nn as nn
 import torch.nn.functional as F
+from torchvision import transforms
+from PIL import Image
 
 device = torch.device('cuda')
 
 #function to read in image and normalize it
 def get_normalized_image(image_path):
     img = cv.imread(image_path, 0)
+    #img = Image.open(file_name).convert('LA')
     #img = np.swapaxes(img, 0,2)
     #img_norm = (img-np.mean(img))/np.std(img)
     
-    img_thresh = cv.adaptiveThreshold(img,100,cv.ADAPTIVE_THRESH_GAUSSIAN_C,\
-        cv.THRESH_BINARY,11,2) 
-    img_thresh[img_thresh == 0] = 20
-    tensor_img = torch.from_numpy(img_thresh).unsqueeze(0)
+    tensor_img = torch.from_numpy(img_norm).unsqueeze(0)
     
     return tensor_img
 
 class ASLLettersDataset(Dataset):
-    def __init__(self, img_paths, labels):
+    def __init__(self, img_paths, labels, img_transform):
         
         self.img_paths = img_paths
         self.labels = labels
-    
+        
+        self.colour_jitter = transforms.ColorJitter(brightness=0.7, contrast=0.7, saturation=0.7, hue=0.5)
+        self.random_crop = transforms.RandomCrop(170)
+        self.grayscale = transforms.Grayscale(num_output_channels=1)
+        
+        self.img_transform = img_transform
+        
+        
     def __len__(self):
         return len(self.img_paths)
     
@@ -42,10 +49,24 @@ class ASLLettersDataset(Dataset):
         path = self.img_paths[idx]
         
         #load data and get label
-        X = get_normalized_image(path)
+        X = Image.open(path)
+        
+        if self.img_transform:
+            X = self.colour_jitter(X)
+            X = self.random_crop(X)
+    
+            
+            X_mask = Image.new("RGB", (200,200))        
+            X_mask.paste(X, (15,15))
+            X = X_mask
+        
+        X = self.grayscale(X)
+        #convert PIL image to grayscale and then convert to tensor
+        X_tensor = transforms.functional.to_tensor(X)
+        
         y = self.labels[path]
         
-        return X, y
+        return X_tensor, y
     
 class CNN(nn.Module):
     def __init__(self, output_dim):

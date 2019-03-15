@@ -94,10 +94,10 @@ if __name__ == '__main__':
     #learning_rate = 0.001
     
     #Dataloaders
-    train_set = ASLLettersDataset(partition['train'], labels)
+    train_set = ASLLettersDataset(partition['train'], labels, img_transform=True)
     train_loader = DataLoader(train_set, **params)
     
-    val_set = ASLLettersDataset(partition['validation'], labels)
+    val_set = ASLLettersDataset(partition['validation'], labels, img_transform=False)
     val_loader = DataLoader(val_set, **params)
 
     #instantiate CNN
