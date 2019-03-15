@@ -34,8 +34,9 @@ class ASLLettersDataset(Dataset):
         
         self.img_paths = img_paths
         self.labels = labels
-        
-        self.colour_jitter = transforms.ColorJitter(brightness=0.7, contrast=0.7, saturation=0.7, hue=0.5)
+
+        self.colour_jitter = transforms.ColorJitter(brightness=0.3, contrast=0.7, saturation=0.3, hue=0.1)
+        self.random_rotate = transforms.RandomRotation(20)
         self.random_crop = transforms.RandomCrop(170)
         self.grayscale = transforms.Grayscale(num_output_channels=1)
         
@@ -53,6 +54,7 @@ class ASLLettersDataset(Dataset):
         
         if self.img_transform:
             X = self.colour_jitter(X)
+            X = self.random_rotate(X)
             X = self.random_crop(X)
     
             
