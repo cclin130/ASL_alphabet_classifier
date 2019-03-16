@@ -71,7 +71,7 @@ class ASLLettersDataset(Dataset):
         return X_tensor, y
     
 class CNN(nn.Module):
-    def __init__(self, output_dim):
+    def __init__(self):
         super().__init__()
         
         self.conv1 = nn.Conv2d(1, 6, kernel_size=5, stride=1, padding=0)
@@ -82,7 +82,7 @@ class CNN(nn.Module):
         self.conv5 = nn.Conv2d(16, 120, kernel_size=5, stride=1, padding=0)
         
         self.fc6 = nn.Linear(120*43*43, 84)
-        self.fc7 = nn.Linear(84, output_dim)
+        self.fc7 = nn.Linear(84, 26)
         
     def forward(self, x):
         #cast to float
