@@ -91,7 +91,7 @@ class CNN(nn.Module):
                 m.bias.data.zero_()
     
     def make_layers(self, batch_norm=False):
-        cfg = [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 'M', 512, 512, 512, 'M', 512, 512, 512, 'M']
+        cfg = [64, 'M', 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512, 'M']
         in_channels = 3
         layers = []
         for v in cfg:
