@@ -36,6 +36,7 @@ class ASLLettersDataset(Dataset):
         self.random_rotate = transforms.RandomRotation(20)
         self.random_crop = transforms.RandomCrop(170)
         self.grayscale = transforms.Grayscale(num_output_channels=1)
+        self.resize = transforms.Resize([224,224])
         
         self.img_transform = img_transform
         
@@ -49,6 +50,7 @@ class ASLLettersDataset(Dataset):
         #load data and get label
         X = Image.open(path)
         
+        #only augment data if img_transform = True
         if self.img_transform:
             X = self.colour_jitter(X)
             X = self.random_rotate(X)
@@ -59,7 +61,8 @@ class ASLLettersDataset(Dataset):
             X_mask.paste(X, (15,15))
             X = X_mask
         
-        #convert PIL image to grayscale and then convert to tensor
+        #convert PIL image to tensor this normalize
+        X = self.resize(X)
         X_tensor = transforms.functional.to_tensor(X)
         X_tensor = (X_tensor-X_tensor.mean())/X_tensor.std()
         
@@ -80,7 +83,7 @@ class CNN(nn.Module):
             nn.Linear(512, 512),
             nn.ReLU(True),
             nn.Linear(512, 26),
-            nn.Softmax(dim=0)
+            nn.ReLU(True)
         )
 
         # Initialize weights

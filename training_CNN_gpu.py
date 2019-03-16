@@ -23,7 +23,8 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 import pickle
 
-from CNN_classes2_gpu import ASLLettersDataset, CNN
+from CNN_vgg_gpu import ASLLettersDataset, CNN
+from torchvision.models.vgg import vgg11
 
 seed=42
 np.random.seed(seed)
@@ -89,8 +90,6 @@ if __name__ == '__main__':
               'shuffle': True,
               'num_workers': 6}
     #max_epochs = 20
-    input_size = 200*200*3
-    output_size = 26
     #learning_rate = 0.001
     
     #Dataloaders
@@ -101,7 +100,8 @@ if __name__ == '__main__':
     val_loader = DataLoader(val_set, **params)
 
     #instantiate CNN
-    net = CNN()
+    #net = CNN()
+    net = vgg11(num_classes=26)
     net.cuda()
     optimizer = torch.optim.Adam(net.parameters(), lr=learning_rate)
     loss_fn = nn.CrossEntropyLoss()
