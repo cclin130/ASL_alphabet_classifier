@@ -7,12 +7,15 @@ Created on Sun Mar 10 19:26:04 2019
 import os
 import sys
 import numpy as np
+from PIL import Image
 import torch
 from torch.utils.data import DataLoader
 import torch.nn as nn
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
+from torchvision import transforms
+from torchvision.models.vgg import vgg11
 from matplotlib import pyplot as plt
 import seaborn as sns
 import pickle
@@ -22,15 +25,23 @@ from CNN_classes2_gpu import ASLLettersDataset, CNN
 seed=42
 np.random.seed(seed)
 torch.manual_seed(seed)
-      
+
+def get_normalized_image(image_path):
+    X = Image.open(image_path)
+    X = transforms.functional.resize(X, [224,224])
+    X_tensor = transforms.functional.to_tensor(X)
+    X_tensor = (X_tensor-X_tensor.mean())/X_tensor.std()
+    
+    return X_tensor
+
 if __name__ == '__main__':
     
     #load model:
     device = torch.device('cpu')
-    net = CNN(26)
-    net.load_state_dict(torch.load('model_cnn_3000_6.pkl', map_location=device))
+    net = vgg11(num_classes=26)
+    net.load_state_dict(torch.load('model_cnn_3000_9.pkl', map_location=device))
     
-    with open('mat_3000_6.pkl', 'rb') as input:
+    with open('mat_3000_9.pkl', 'rb') as input:
         mat = pickle.load(input)
     
     sns.heatmap(mat, square=True, annot=True, cbar=False)
