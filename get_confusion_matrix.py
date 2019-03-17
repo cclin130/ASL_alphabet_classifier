@@ -10,7 +10,7 @@ import numpy as np
 from PIL import Image
 import torch
 from torch.utils.data import DataLoader
-import torch.nn as nn
+import torch
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
@@ -20,7 +20,7 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 import pickle
 
-from CNN_classes2_gpu import ASLLettersDataset, CNN
+from CNN_vgg_gpu import ASLLettersDataset
 
 seed=42
 np.random.seed(seed)
