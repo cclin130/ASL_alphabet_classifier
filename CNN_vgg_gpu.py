@@ -32,8 +32,8 @@ class ASLLettersDataset(Dataset):
         self.img_paths = img_paths
         self.labels = labels
 
-        self.colour_jitter = transforms.ColorJitter(brightness=0.3, contrast=0.7, saturation=0.3, hue=0.1)
-        self.random_rotate = transforms.RandomRotation(20)
+        self.colour_jitter = transforms.ColorJitter(brightness=0.6, contrast=0.8, saturation=0.6, hue=0.4)
+        self.random_rotate = transforms.RandomRotation(30)
         self.random_crop = transforms.RandomCrop(170)
         self.grayscale = transforms.Grayscale(num_output_channels=1)
         self.resize = transforms.Resize([224,224])
@@ -55,11 +55,6 @@ class ASLLettersDataset(Dataset):
             X = self.colour_jitter(X)
             X = self.random_rotate(X)
             X = self.random_crop(X)
-    
-            
-            X_mask = Image.new("RGB", (200,200))        
-            X_mask.paste(X, (15,15))
-            X = X_mask
         
         #convert PIL image to tensor this normalize
         X = self.resize(X)
