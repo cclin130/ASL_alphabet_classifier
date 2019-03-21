@@ -23,7 +23,7 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 import pickle
 
-from CNN_vgg_gpu import ASLLettersDataset
+from model.CNN_vgg_gpu import ASLLettersDataset
 from torchvision.models.vgg import vgg11
 
 seed=42
