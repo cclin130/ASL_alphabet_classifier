@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<style>
+#container {
+	margin: 0px auto;
+	width: 500px;
+	height: 375px;
+	border: 10px #333 solid;
+}
+#videoElement {
+	width: 500px;
+	height: 375px;
+	background-color: #666;
+}
+</style>
+</head>
+
+
+   <body>
+     <h1 class="title"> ASL ALPHABET CLASSIFIER APP </h1>
+     <form id="form" action = "http://localhost:5000/" method = "POST"
+           enctype = "multipart/form-data">
+
+        <div id="container">
+            <video autoplay="true" id="videoElement">
+            </video>
+        </div>
+            {% if prediction == None %}
+            <!-- Show upload buttons if there is no prediction results yet. -->
+               <label for="load" class="center custom-button">
+                  <input type="button" id="load" value="Take Photo" onchange=snap() />
+               </label>
+            {% else %}
+            <!-- Show prediction results. -->
+               <p class="result"> The ASL Alphabet model read a <b>{{ prediction }}</b> </p>
+            {% endif %}
+     </form>
+<script>
+
+var video = document.querySelector("#videoElement");
+
+if (navigator.mediaDevices.getUserMedia) {
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+      video.srcObject = stream;
+    })
+    .catch(function (err0r) {
+      console.log("Something went wrong!");
+    });
+}
+
+function takePhoto(img)
+{
+    const img = img || document.querySelector('img');
+
+    imageCapture.takePhoto()
+    .then(blob => {
+        let url = window.URL.createObjectURL(blob);
+        img.src = url;
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error);
+
+    document.getElementById("form").submit()
+};
+
+function snap()
+{
+    const track = mediaStream.getVideoTracks()[0];
+    let imageCapture = new ImageCapture(track);
+    document.getElementById("form").submit();
+};
+
+</script>
+   </body>
+</html>

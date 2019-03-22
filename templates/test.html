@@ -1,0 +1,42 @@
+<!-- CSS -->
+<style>
+#my_camera{
+ width: 320px;
+ height: 240px;
+ border: 1px solid black;
+}
+</style>
+
+<div id="my_camera" style="width: 320px; height: 240px;">
+    <div class="vsc-controller" data-vscid="gmqporwg2"></div>
+    <div></div>
+    <video autoplay="autoplay" style="width: 320px; height: 240px;" class="vsc-initialized" data-vscid="gmqporwg2"></video>
+</div>
+ 
+<!-- Webcam.min.js -->
+<script type="text/javascript" src="webcamjs/webcam.min.js"></script>
+
+<!-- Configure a few settings and attach camera -->
+<script language="JavaScript">
+ Webcam.set({
+  width: 320,
+  height: 240,
+  image_format: 'jpeg',
+  jpeg_quality: 90
+ });
+ Webcam.attach( '#my_camera' );
+ <form>
+    <input type="button" value="Take Snapshot" onclick="take_snapshot()">
+</form>
+
+<!-- Code to handle taking the snapshot and displaying it locally -->
+function take_snapshot() {
+ 
+ // take snapshot and get image data
+ Webcam.snap( function(data_uri) {
+  // display results in page
+  document.getElementById('results').innerHTML = 
+  '<img src="'+data_uri+'"/>';
+  } );
+}
+</script>
