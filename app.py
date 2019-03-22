@@ -16,9 +16,9 @@ app = Flask(__name__)
 def upload():
     if request.method == 'POST':
         prediction = predictor.predict(request)
-        return render_template('home.html', prediction=prediction)
+        return render_template('test3.html', prediction=prediction)
     else:
-        return render_template('home.html', prediction=None)
+        return render_template('test3.html', prediction=None)
 
 if __name__ == '__main__':
    app.run()
