@@ -1,24 +1,24 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Mar 17 16:22:44 2019
+from flask import Flask, render_template, request, make_response
+from functools import wraps, update_wrapper
+from PIL import Image
+from predictor import Predictor
 
-@author: Cheng Lin
-"""
+import numpy as np
+import torch
 
-from cv2 import *
-# initialize the camera
-cam = VideoCapture(0)   # 0 -> index of camera
-s, img = cam.read()
-if s:    # frame captured without any errors
-    namedWindow("cam-test")
-    imshow("cam-test",img)
-    waitKey(0)
-    destroyWindow("cam-test")
-    imwrite("filename.jpg",img) #save imagefrom SimpleCV import Image, Camera
+# Initialize the predictor object
+predictor = Predictor()
 
+# Initialize the flask application
+app = Flask(__name__)
 
-from SimpleCV import Image, Camera
+@app.route('/', methods=['GET', 'POST'])
+def upload():
+    if request.method == 'POST':
+        prediction = predictor.predict(request)
+        return render_template('home.html', prediction=prediction)
+    else:
+        return render_template('home.html', prediction=None)
 
-cam = Camera()
-img = cam.getImage()
-img.save("filename.jpg")
+if __name__ == '__main__':
+   app.run()
