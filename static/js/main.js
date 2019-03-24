@@ -1,45 +1,19 @@
-function submit() {
-    document.getElementById("form").submit();
-}
 
-function ShowCam() {
-    Webcam.set({
-        width: 320,
-        height: 240,
-        image_format: 'jpeg',
-        jpeg_quality: 100
+var video = document.querySelector("#videoElement");
+
+if (navigator.mediaDevices.getUserMedia) {
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+      video.srcObject = stream;
+    })
+    .catch(function (error) {
+      console.log("Something went wrong!");
     });
-    Webcam.attach('#my_camera');
-}
-window.onload= ShowCam;
-
-function take_snapshot() {
- // take snapshot and get image data
- Webcam.snap( function(data_uri) {
-  // display results in page
-  document.getElementById('results').innerHTML =
-  '<img src="'+data_uri+'"/>';
-  } );
 }
 
-function upload() {
-    console.log("Uploading...")
-    var image = document.getElementById('image').src;
-    var form = document.getElementById('myForm');
-    var formData = new FormData(form);
-    formData.append("file", image);
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "/signup");
-
-    // check when state changes,
-    xmlhttp.onreadystatechange = function() {
-
-    if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        alert(xmlhttp.responseText);
-        }
-    }
-
-    xmlhttp.send(formData);
-    console.log(formData.get('file'));
-    console.log(formData.get('userID'));
-}
+function snap()
+{
+    const track = mediaStream.getVideoTracks()[0];
+    var imageCapture = new ImageCapture(track);
+    document.getElementById("form").submit();
+};
