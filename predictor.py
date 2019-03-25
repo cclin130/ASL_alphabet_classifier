@@ -10,9 +10,10 @@ resize = transforms.Resize([224, 224])
 
 def preprocess_img(image):
     '''
-	This method processes the image into the correct expected shape in the model (224, 224).
+	This method processes the image by cropping and reshaping to 224x224.
 	'''
-    image = resize(image)
+    image = transforms.functional.resized_crop(\
+                image, i=20, j=15, h=300, w=300, size=(224,224))
     return image
 
 def image_loader(image):
