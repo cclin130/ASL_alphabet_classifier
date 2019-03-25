@@ -3,28 +3,37 @@
   <head>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="static/css/main.css" media="screen"/>
+    <link rel="shortcut icon" href="#" />
   </head>
 
   <body>
     <h1> ASL ALPHABET CLASSIFIER APP </h1>
+      <!-- declare form to perform POST request when button is pressed -->
       <form id="form" action = "http://localhost:5000/" method = "POST" enctype = "multipart/form-data">
 
         <div id="container">
             <video autoplay="true" id="videoElement">
             </video>
-        </div>
 
-           <label for="load" class="center custom-button">
-              <input type="button" id="load" value="Take Photo" onchange=snap() />
-           </label>
-        {% if prediction != None %}
-        <!-- Show prediction results. -->
-            <p class="result"> The ASL Alphabet model read a <b>{{ prediction }}</b> </p>
-        {% endif %}
+            <div class="box"></div>
+        </div>
+          
+          <!-- Show button to take photo. -->
+          <label for="load" class="center custom-button">
+              <input type="button" id="take_photo" value="Take Photo" onclick="snap()" />
+          </label>
+
+          <!-- Show prediction results (set invisibile until we get a response from model)-->
+          <div id="output_display" class="result" style="visibility: hidden;"> The ASL Alphabet model read a
+            <span id="output"></span>.
+          </div>
       </form>
 
+    <!-- simple project description -->
+
     <p>
-      
+      ~~~<br />
+
       This ASL alphabet classifier will tell you what America Sign Language letter you're displaying. Place your hand gesture in the border and press "Take Photo" to run the model!
 
     </p>
