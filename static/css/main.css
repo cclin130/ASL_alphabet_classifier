@@ -18,7 +18,11 @@ p {
     text-align: center;
     position: absolute;
     left: 50%;
-    margin-left: -300px; /* margin is -0.5 * dimension */
+    margin: 0px 0px 0px -300px; /* margin is -0.5 * dimension */
+}
+
+span {
+    font-weight: bold;
 }
 
 .center {
@@ -27,7 +31,19 @@ p {
 }
 
 .result { 
-    padding-top: 11em;
+    text-align: center;
+}
+
+/*Style for boundary box in image*/
+.box{
+    width: 230px;
+    height: 230px;
+    border: solid;
+    border-width: 2px;
+    border-color: #3bd6c6;
+    position: relative;
+    left: 6%;
+    top: -94%;
 }
 
 /*Style for button*/
